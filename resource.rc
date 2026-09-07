@@ -1,0 +1,3 @@
+#include "resource.h"
+
+IDR_WALLPAPER_IMG RCDATA "wallpaper1.png"
