@@ -1,23 +1,29 @@
-name: C/C++ CI
+name: Build C++ App
 
 on:
   push:
     branches: [ "main" ]
-  pull_request:
-    branches: [ "main" ]
 
 jobs:
   build:
-
-    runs-on: ubuntu-latest
+    runs-on: windows-latest
 
     steps:
-    - uses: actions/checkout@v4
-    - name: configure
-      run: ./configure
-    - name: make
-      run: make
-    - name: make check
-      run: make check
-    - name: make distcheck
-      run: make distcheck
+    - name: Checkout Code
+      uses: actions/checkout@v4
+
+    - name: Setup MinGW
+      uses: egor-tisin/setup-mingw-gh-action@v1
+      with:
+        version: '12.2.0'
+
+    - name: Compile Resources and C++
+      run: |
+        windres resource.rc -O coff -o resource.o
+        g++ main.cpp resource.o -o application.exe
+
+    - name: Upload EXE
+      uses: actions/upload-artifact@v4
+      with:
+        name: MyExecutable
+        path: application.exe
