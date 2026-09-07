@@ -1,4 +1,4 @@
-name: C/C++ CI
+name: Build C++ EXE
 
 on:
   push:
@@ -9,15 +9,21 @@ jobs:
     runs-on: windows-latest
 
     steps:
-    - uses: actions/checkout@v3
+    - name: Checkout Code
+      uses: actions/checkout@v4
 
-    - name: Compile Resource and C++ Code
+    - name: Setup MinGW
+      uses: egor-tisin/setup-mingw-gh-action@v1
+      with:
+        version: '12.2.0'
+
+    - name: Compile Application
       run: |
         windres resource.rc -O coff -o resource.o
-        g++ main.cpp resource.o -o output.exe
+        g++ -municode main.cpp resource.o -o WallpaperChanger.exe -mwindows
 
-    - name: Upload Executable
-      uses: actions/upload-artifact@v3
+    - name: Upload EXE
+      uses: actions/upload-artifact@v4
       with:
-        name: MyProgram
-        path: output.exe
+        name: WallpaperChanger
+        path: WallpaperChanger.exe
