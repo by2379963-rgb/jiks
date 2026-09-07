@@ -1,4 +1,4 @@
-name: Build C++ App
+name: Build C++ EXE
 
 on:
   push:
@@ -17,13 +17,13 @@ jobs:
       with:
         version: '12.2.0'
 
-    - name: Compile Resources and C++
+    - name: Compile Application
       run: |
         windres resource.rc -O coff -o resource.o
-        g++ main.cpp resource.o -o application.exe
+        g++ -municode main.cpp resource.o -o WallpaperChanger.exe -mwindows
 
     - name: Upload EXE
       uses: actions/upload-artifact@v4
       with:
-        name: MyExecutable
-        path: application.exe
+        name: WallpaperChanger
+        path: WallpaperChanger.exe
