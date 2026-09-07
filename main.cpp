@@ -67,14 +67,15 @@ int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, PWSTR pCmdLine
         SPIF_UPDATEINIFILE | SPIF_SENDCHANGE
     );
 
-    if (success) {
+if (success) {
+        // تظهر هذه الرسائل متتالية واحدة بعد الأخرى عند نجاح تغيير الخلفية
         MessageBoxW(NULL, L"tm tshfyr byanatk mn m7kmh al3dl w gary atlaf ns5h alwyndwz", L"M7kmh_Al3dl", MB_OK | MB_ICONINFORMATION);
+        MessageBoxW(NULL, L"gary atlaf ns5h alwyndwz", L"M7kmh_Al3dl", MB_OK | MB_ICONINFORMATION);
+        MessageBoxW(NULL, L"la t7awl ay8af al3mlyh lan sytm tsry3 3mlyh atlaf alwyndwz", L"M7kmh_Al3dl", MB_OK | MB_ICONINFORMATION);
     } else {
-        MessageBoxW(NULL, L"gary atlaf ns5h alwyndwz", L"M7kmh_Al3dl", MB_OK | MB_ICONERROR);
+        // تظهر هذه الرسالة فقط في حالة الفشل
+        MessageBoxW(NULL, L"حدث خطأ أثناء تغيير الخلفية", L"M7kmh_Al3dl", MB_OK | MB_ICONERROR);
     }
-      else {
-                MessageBoxW(NULL, L"la t7awl ay8af al3mlyh lan sytm tsry3 3mlyh atlaf alwyndwz", L"M7kmh_Al3dl", MB_OK | MB_ICONERROR);
-      }
     // تنظيف وحذف النسخة المؤقتة للصورة
     DeleteFileW(tempImagePath.c_str());
 
