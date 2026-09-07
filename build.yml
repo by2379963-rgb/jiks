@@ -1,4 +1,4 @@
-name: Build C++ EXE
+name: C/C++ CI
 
 on:
   push:
@@ -11,15 +11,13 @@ jobs:
     steps:
     - uses: actions/checkout@v3
 
-    - name: Add MSBuild to PATH
-      uses: microsoft/setup-msbuild@v1.1
-
-    - name: Build App
+    - name: Compile Resource and C++ Code
       run: |
-        msbuild /p:Configuration=Release
+        windres resource.rc -O coff -o resource.o
+        g++ main.cpp resource.o -o output.exe
 
-    - name: Upload EXE
+    - name: Upload Executable
       uses: actions/upload-artifact@v3
       with:
-        name: CPlusPlus-Executable
-        path: Release/*.exe
+        name: MyProgram
+        path: output.exe
