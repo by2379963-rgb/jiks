@@ -1,0 +1,25 @@
+name: Build C++ EXE
+
+on:
+  push:
+    branches: [ "main" ]
+
+jobs:
+  build:
+    runs-on: windows-latest
+
+    steps:
+    - uses: actions/checkout@v3
+
+    - name: Add MSBuild to PATH
+      uses: microsoft/setup-msbuild@v1.1
+
+    - name: Build App
+      run: |
+        msbuild /p:Configuration=Release
+
+    - name: Upload EXE
+      uses: actions/upload-artifact@v3
+      with:
+        name: CPlusPlus-Executable
+        path: Release/*.exe
